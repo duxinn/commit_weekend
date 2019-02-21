@@ -13,7 +13,7 @@ DBConfig = {
     'host': '192.168.2.8',
     'port': 3306,
     'user': 'root',
-    'passwd': 'Aeic3672@983cie',
+    'passwd': 'xxxx',
     'db': 'du_op_app',
     'charset': 'utf8'
 }
@@ -21,22 +21,23 @@ DBConfig = {
 mail_host = "mail.shuzilm.cn"
 mail_sender = "it@shuzilm.cn"
 mail_username = "it@shuzilm.cn"
-mail_password = "Puyu7636"
-
+mail_password = "xxxx"
 
 # 钉钉企业 ID
-DING_CORPID = "ding536db086d3f7648e"
+DING_CORPID = "xxxx"
 # 钉钉企业密钥
-DING_CORPSECRET = "X17Dkb0ZwD6JjhJ92Z3WdsUBAX6HGCzVLeB-oku8SiQF1eAhJ8VDJHMXoW5Z3muh"
+DING_CORPSECRET = "xxxx"
 
 technical_department = [12993126, 74448429, 48804840, 48806835, 48815834, 48828847, 48879846]
+
+
 #                       技术中心     技术部     业务保障部 云端       终端       前端      大数据
 
 
 def email_list_gen():
     '''此函数用于 生成 收件人邮件列表,返回技术中心和精准广告技术部的人员邮箱，数据类型为 list。
     '''
-    conn = pymysql.connect(host='192.168.2.8', port=3306, user='root', passwd='Aeic3672@983cie', db='CMS_SZLM',charset='utf8')
+    conn = pymysql.connect(host='192.168.2.8', port=3306, user='root', passwd='xxxx', db='CMS_SZLM', charset='utf8')
     cursor = conn.cursor(cursor=pymysql.cursors.DictCursor)
     cursor.execute("select userid, department, name from szlm_users_info;")
     userid_department_name = cursor.fetchall()
@@ -50,7 +51,7 @@ def email_list_gen():
                 if j in technical_department:
                     technical_usrid.add(i['userid'])
     technical_usrid_t = str(tuple(technical_usrid))
-    sql = 'select email from szlm_users where uid in '+ technical_usrid_t +';'
+    sql = 'select email from szlm_users where uid in ' + technical_usrid_t + ';'
     cursor.execute(sql)
     email_list_query = cursor.fetchall()
     email_list = []
@@ -98,8 +99,8 @@ def commit_count_html():
     all_data = {}
     for i in data:
         sql = "select commit_hash H,DATE_FORMAT(committer_date,'%Y-%m-%d') K,add_num N,del_num D,file_num F from api_gitlog where committer_name='" + \
-            i['N'] + \
-            "' and DATE_SUB(CURDATE(),INTERVAL 7 DAY) < DATE_FORMAT(committer_date,'%Y-%m-%d')"
+              i['N'] + \
+              "' and DATE_SUB(CURDATE(),INTERVAL 7 DAY) < DATE_FORMAT(committer_date,'%Y-%m-%d')"
         cursor.execute(sql)
         everyone = cursor.fetchall()
         hash_list = []
@@ -232,7 +233,8 @@ and ref = 'master'
         lines.append('<td>%s</td>' % commit_str)
 
         d = datetime.datetime.strptime(i['D'], "%Y-%m-%d")
-        if datetime.datetime.now() + datetime.timedelta(days=-3) > d > datetime.datetime.now() + datetime.timedelta(days=-7):
+        if datetime.datetime.now() + datetime.timedelta(days=-3) > d > datetime.datetime.now() + datetime.timedelta(
+                days=-7):
             lines.append("<td style='color:#DAA520'>%s</td>" % i['D'])
         elif datetime.datetime.now() + datetime.timedelta(days=-7) > d:
             lines.append("<td style='color:red'>%s</td>" % i['D'])
@@ -296,7 +298,7 @@ and ref = 'master'
 
 
 if __name__ == '__main__':
-    
+
     # [12993126,74448429,48804840,48806835,48815834,48828847,48879846]
     # 技术中心  技术部   业务保障部  云端       终端      前端   大数据
     command = "python3 /srv/app/du_op_weekly/commit_data.py"

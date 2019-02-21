@@ -7,12 +7,12 @@ import smtplib
 from email.mime.text import MIMEText
 from email.header import Header
 
-
 mail_host = "mail.shuzilm.cn"
 mail_sender = "it@shuzilm.cn"
 mail_username = "it@shuzilm.cn"
-mail_password = "Puyu7636"
-email_list = ['duanyj@shuzilm.cn','chenmin@shuzilm.cn']
+mail_password = "xxxx"
+email_list = ['xxxx@xxxx.cn', 'xxxx@xxxx.cn']
+
 
 def send_email_information(email_list, content, title="提交代码周报"):
     # 实例化一封邮件
@@ -38,6 +38,7 @@ def send_email_information(email_list, content, title="提交代码周报"):
     except Exception as e:
         print(str(e))
         return 0
+
 
 if __name__ == '__main__':
     temp = send_email_information(email_list, 'test')
